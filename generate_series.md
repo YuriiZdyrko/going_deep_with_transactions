@@ -1,0 +1,1 @@
+https://www.citusdata.com/blog/2018/03/14/fun-with-sql-generate-sql/
