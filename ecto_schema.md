@@ -63,7 +63,7 @@ has_one(other_schema, queryable, options[
         \ other_schema <> "_id"
     references 
         \ primary key
-    through
+    through (NEVER USE IT - it's only readable. Usse writable many_to_many)
         # see has_many/has_one :through
     on_delete
         \ :nothing
@@ -95,9 +95,16 @@ has_one(other_schema, queryable, options[
 has_many(name, queryable, opts \\ [
     ...same as in has_one
 ])
+
+has_many :posts, Post
+has_many :children, Comment, foreign_key: :parent_id, references: :id
 ```
 
 ###  has_many/has_one :through
+Read only!
+
+For writable polymorphic association - use  (see [many_to_many](ecto_polymorphism.md))
+
 ```elixir
 # posts schema
 has_many :comments_authors, through: [:comments, :author]
@@ -106,7 +113,6 @@ has_many :comments_authors, through: [:comments, :author]
 belongs_to :author, Author
 belongs_to :post, Post
 
-in query
 # Get associated authors
 assoc(post, [:comments, :author]) |> Repo.all()
 
